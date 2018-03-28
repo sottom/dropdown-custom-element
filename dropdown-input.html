@@ -1,0 +1,62 @@
+<style>
+    #dropdown {
+        border: solid rgba(0,0,0,.7) 1.8px;
+        border-radius: 3px;
+        width: 100%;
+        margin: 0px;
+        display: flex;
+        align-items: center;
+    }
+    
+    #dropdown span {
+        padding: 2px;
+        padding-left: 5px;
+        width: 100%;
+    }
+    
+    #dropdown-items {
+        list-style-type: none;
+        padding: 0px;
+        margin: 0px;
+        border: solid rgba(0,0,0,.7) 1.8px;
+        border-top: none;
+        border-radius: 3px;
+    }
+    
+    #dropdown-items li {
+        padding: 3px; 
+        padding-left: 5px; 
+        border-top: none;
+        user-select: none;
+    }
+    
+    #dropdown-items li:hover {
+        background: lightgray;
+    }
+    
+    #dropdown-parent {
+        width: 18%;
+        cursor: pointer;
+    }
+    
+    .selected {
+        background-color: lightblue;
+        transition: all .4s ease-in;
+        transition: all .4s ease-out;
+    }
+    
+    #dropdownIcon {
+        padding: 3px;
+    }
+</style>
+
+<div id="dropdown-parent">
+    <input type="hidden" id="dropdown-value" value="">
+    <p id="dropdown">
+        <span contenteditable="true"></span>
+        <i class="fa fa-caret-down" id="dropdownIcon" aria-hidden="true"></i>
+    </p>
+    <ul id="dropdown-items">
+    </ul>
+</div>
+
