@@ -33,17 +33,14 @@ function runCode(template) {
             }
 
             connectedCallback() {
+                let parent = this;
 
-                this.setOptions;
-                runCode(this.shadowRoot);
-
-                function runCode(shadowRoot){
-
-                    let dropdown        = shadowRoot.querySelector('#dropdown');
-                    let dropdownUl      = shadowRoot.querySelector('#dropdown-items');
+                parent.setOptions;
+                    let dropdown        = parent.shadowRoot.querySelector('#dropdown');
+                    let dropdownUl      = parent.shadowRoot.querySelector('#dropdown-items');
                     $(dropdownUl).hide();
-                    let dropdownLi      = shadowRoot.querySelectorAll('#dropdown-items li');
-                    let dropdownContent = shadowRoot.querySelector('#dropdown span');
+                    let dropdownLi      = parent.shadowRoot.querySelectorAll('#dropdown-items li');
+                    let dropdownContent = parent.shadowRoot.querySelector('#dropdown span');
                 
                     dropdown.addEventListener('focusin', event => {
                         openAndCloseDropdown(event);
@@ -64,7 +61,7 @@ function runCode(template) {
                         if(e.keyCode == 13){
                             // e.preventDefault();
                             // switchDropdownTextValue(dropdownLi[0]);
-                            // shadowRoot.querySelector('span[contenteditable=true]').blur();
+                            // parent.shadowRoot.querySelector('span[contenteditable=true]').blur();
                             // dropdownUl.innerHTML = '';
                             // Array.from(dropdownLi).sort(sort_li).forEach(li => {
                             //     dropdownUl.appendChild(li) ;
@@ -120,7 +117,18 @@ function runCode(template) {
                         dropdownContent.textContent = chosenElement.textContent;
                         //highlight the one we chose
                         chosenElement.classList.add('selected');
-                        shadowRoot.querySelector('#dropdown-value').setAttribute('value', chosenElement.textContent);
+
+                        let $component = $('input[name*="'+componentName+'"]');
+                        console.log($component.length)
+                        if($component.length == 0){
+                            console.log(parent);
+                            $(parent).before('<input type="hidden" name="'+componentName+'1" value="'+chosenElement.textContent+'" id="dropdown-value">');
+                        }
+                        else {
+                            $component = $.map($component, input => parseInt(input.getAttribute('name').match(/\d+/)));
+                            console.log($component);
+                            $(parent).before('<input type="hidden" name="'+componentName+(Math.max(...$component)+1)+'" value="'+chosenElement.textContent+'" id="dropdown-value">');
+                        }
                     }
                 
                 
@@ -142,7 +150,6 @@ function runCode(template) {
                             // if(event.type == 'focusout'){  dropdownLi.style.diplay = 'block' }
                         });
                     }
-                }
             }
         } //end html element
 
