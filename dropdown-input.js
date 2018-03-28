@@ -23,7 +23,7 @@ function runCode(template) {
             } 
 
             get setOptions(){
-                let options = JSON.parse(this.getAttribute('options'));
+                let options = this.getAttribute('options').split(',').map(op => op.trim());
                 let ul = this.shadowRoot.querySelector('#dropdown-items');
                 options.forEach(op => {
                     let li = document.createElement('li');
@@ -38,14 +38,12 @@ function runCode(template) {
                 runCode(this.shadowRoot);
 
                 function runCode(shadowRoot){
-                    console.log(shadowRoot);
 
                     let dropdown        = shadowRoot.querySelector('#dropdown');
                     let dropdownUl      = shadowRoot.querySelector('#dropdown-items');
                     $(dropdownUl).hide();
                     let dropdownLi      = shadowRoot.querySelectorAll('#dropdown-items li');
                     let dropdownContent = shadowRoot.querySelector('#dropdown span');
-                    console.log(dropdown, dropdownLi, dropdownContent, dropdownUl)
                 
                     dropdown.addEventListener('focusin', event => {
                         openAndCloseDropdown(event);
@@ -120,7 +118,6 @@ function runCode(template) {
                     function switchDropdownTextValue(chosenElement){
                         let originalText = dropdown.textContent;
                         dropdownContent.textContent = chosenElement.textContent;
-                        console.log(originalText, dropdownContent.textContent)
                         //highlight the one we chose
                         chosenElement.classList.add('selected');
                         shadowRoot.querySelector('#dropdown-value').setAttribute('value', chosenElement.textContent);
